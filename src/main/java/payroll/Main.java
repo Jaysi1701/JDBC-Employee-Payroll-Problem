@@ -1,5 +1,7 @@
 package payroll;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -7,11 +9,12 @@ public class Main {
         PayrollDBService service =
                 new PayrollDBService();
 
-        EmployeePayrollData employee =
-                service.getEmployeeByName(
-                        "Bill"
+        List<EmployeePayrollData> employees =
+                service.getEmployeesByDateRange(
+                        "2018-01-01",
+                        "2025-12-31"
                 );
 
-        System.out.println(employee);
+        employees.forEach(System.out::println);
     }
 }

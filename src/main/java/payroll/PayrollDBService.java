@@ -190,4 +190,69 @@ public class PayrollDBService {
         return null;
     }
 
+    public List<EmployeePayrollData>
+    getEmployeesByDateRange(
+            String start,
+            String end) {
+
+        List<EmployeePayrollData> employeeList =
+                new ArrayList<>();
+
+        String sql =
+                "SELECT * FROM employee_payroll " +
+                        "WHERE start BETWEEN ? AND ?";
+
+        try (
+                Connection connection =
+                        getConnection();
+
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement(sql)
+        ) {
+
+            preparedStatement.setString(1, start);
+
+            preparedStatement.setString(2, end);
+
+            ResultSet resultSet =
+                    preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int id =
+                        resultSet.getInt("id");
+
+                String name =
+                        resultSet.getString("name");
+
+                String gender =
+                        resultSet.getString("gender");
+
+                double salary =
+                        resultSet.getDouble("salary");
+
+                java.time.LocalDate startDate =
+                        resultSet.getDate("start")
+                                .toLocalDate();
+
+                employeeList.add(
+                        new EmployeePayrollData(
+                                id,
+                                name,
+                                gender,
+                                salary,
+                                startDate
+                        )
+                );
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+        }
+
+        return employeeList;
+    }
+
+
 }
