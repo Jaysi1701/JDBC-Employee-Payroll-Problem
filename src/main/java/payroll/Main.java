@@ -1,7 +1,5 @@
 package payroll;
 
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -9,16 +7,11 @@ public class Main {
         PayrollDBService service =
                 new PayrollDBService();
 
-        // UPDATE SALARY
-        service.updateSalary(
-                "Bill",
-                5000000.00
-        );
+        EmployeePayrollData employee =
+                service.getEmployeeByName(
+                        "Bill"
+                );
 
-        // READ DATA
-        List<EmployeePayrollData> employees =
-                service.readData();
-
-        employees.forEach(System.out::println);
+        System.out.println(employee);
     }
 }
